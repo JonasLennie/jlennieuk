@@ -17,8 +17,8 @@ const { apiRunner, apiRunnerAsync } = require(`./api-runner-ssr`)
 const asyncRequires = require(`$virtual/async-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
+
 const chunkMapping = require(`../public/chunk-map.json`)
-const { headHandlerForSSR } = require(`./head/head-export-handler-for-ssr`)
 
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
@@ -50,6 +50,19 @@ const getPageDataPath = path => {
   const fixedPagePath = path === `/` ? `index` : path
   return join(`page-data`, fixedPagePath, `page-data.json`)
 }
+
+const getPageDataUrl = pagePath => {
+  const pageDataPath = getPageDataPath(pagePath)
+  return `${__PATH_PREFIX__}/${pageDataPath}`
+}
+
+const getStaticQueryPath = hash => join(`page-data`, `sq`, `d`, `${hash}.json`)
+
+const getStaticQueryUrl = hash =>
+  `${__PATH_PREFIX__}/${getStaticQueryPath(hash)}`
+
+const getAppDataUrl = () =>
+  `${__PATH_PREFIX__}/${join(`page-data`, `app-data.json`)}`
 
 const createElement = React.createElement
 
@@ -195,16 +208,12 @@ export default async function staticPage({
       postBodyComponents = sanitizeComponents(components)
     }
 
-    const { componentChunkName } = pageData
+    const pageDataUrl = getPageDataUrl(pagePath)
+
+    const { componentChunkName, staticQueryHashes = [] } = pageData
     const pageComponent = await asyncRequires.components[componentChunkName]()
 
-    headHandlerForSSR({
-      pageComponent,
-      setHeadComponents,
-      staticQueryContext,
-      pageData,
-      pagePath,
-    })
+    const staticQueryUrls = staticQueryHashes.map(getStaticQueryUrl)
 
     class RouteHandler extends React.Component {
       render() {
@@ -407,7 +416,7 @@ export default async function staticPage({
     // Reorder headComponents so meta tags are always at the top and aren't missed by crawlers
     // by being pushed down by large inline styles, etc.
     // https://github.com/gatsbyjs/gatsby/issues/22206
-    headComponents.sort((a, _) => {
+    headComponents.sort((a, b) => {
       if (a.type && a.type === `meta`) {
         return -1
       }

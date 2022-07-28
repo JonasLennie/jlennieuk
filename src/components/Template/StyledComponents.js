@@ -13,7 +13,8 @@ export const Image = ( { alt, src } ) => {
     return (
         <img alt={alt} src={src} style={{
             width: "auto",
-            maxHeight: 45
+            maxHeight: 40,
+            margin: 5
         }} />
     )
 }

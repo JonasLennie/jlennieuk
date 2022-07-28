@@ -16,6 +16,8 @@ export const PageResourceStatus = {
   Success: `success`,
 }
 
+const preferDefault = m => (m && m.default) || m
+
 const stripSurroundingSlashes = s => {
   s = s[0] === `/` ? s.slice(1) : s
   s = s.endsWith(`/`) ? s.slice(0, -1) : s
@@ -61,7 +63,7 @@ const doesConnectionSupportPrefetch = () => {
 // Regex that matches common search crawlers
 const BOT_REGEX = /bot|crawler|spider|crawling/i
 
-const toPageResources = (pageData, component = null, head) => {
+const toPageResources = (pageData, component = null) => {
   const page = {
     componentChunkName: pageData.componentChunkName,
     path: pageData.path,
@@ -73,7 +75,6 @@ const toPageResources = (pageData, component = null, head) => {
 
   return {
     component,
-    head,
     json: pageData.result,
     page,
   }
@@ -260,35 +261,29 @@ export class BaseLoader {
 
       const finalResult = {}
 
-      // In develop we have separate chunks for template and Head components
-      // to enable HMR (fast refresh requires single exports).
-      // In production we have shared chunk with both exports. Double loadComponent here
-      // will be deduped by webpack runtime resulting in single request and single module
-      // being loaded for both `component` and `head`.
-      const componentChunkPromise = Promise.all([
-        this.loadComponent(componentChunkName),
-        this.loadComponent(componentChunkName, `head`),
-      ]).then(([component, head]) => {
-        finalResult.createdAt = new Date()
-        let pageResources
-        if (!component || component instanceof Error) {
-          finalResult.status = PageResourceStatus.Error
-          finalResult.error = component
-        } else {
-          finalResult.status = PageResourceStatus.Success
-          if (result.notFound === true) {
-            finalResult.notFound = true
+      const componentChunkPromise = this.loadComponent(componentChunkName).then(
+        component => {
+          finalResult.createdAt = new Date()
+          let pageResources
+          if (!component || component instanceof Error) {
+            finalResult.status = PageResourceStatus.Error
+            finalResult.error = component
+          } else {
+            finalResult.status = PageResourceStatus.Success
+            if (result.notFound === true) {
+              finalResult.notFound = true
+            }
+            pageData = Object.assign(pageData, {
+              webpackCompilationHash: allData[0]
+                ? allData[0].webpackCompilationHash
+                : ``,
+            })
+            pageResources = toPageResources(pageData, component)
           }
-          pageData = Object.assign(pageData, {
-            webpackCompilationHash: allData[0]
-              ? allData[0].webpackCompilationHash
-              : ``,
-          })
-          pageResources = toPageResources(pageData, component, head)
+          // undefined if final result is an error
+          return pageResources
         }
-        // undefined if final result is an error
-        return pageResources
-      })
+      )
 
       const staticQueryBatchPromise = Promise.all(
         staticQueryHashes.map(staticQueryHash => {
@@ -582,6 +577,7 @@ export class ProdLoader extends BaseLoader {
 
       return (
         asyncRequires.components[chunkName]()
+          .then(preferDefault)
           // loader will handle the case when component is error
           .catch(err => err)
       )

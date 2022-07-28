@@ -1,3 +1,4 @@
+/* global HAS_REACT_18 */
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
@@ -23,13 +24,23 @@ import stripPrefix from "./strip-prefix"
 
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
-import { reactDOMUtils } from "./react-dom-utils"
 
 const loader = new ProdLoader(asyncRequires, matchPaths, window.pageData)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
-const { render, hydrate } = reactDOMUtils()
+let reactHydrate
+let reactRender
+if (HAS_REACT_18) {
+  const reactDomClient = require(`react-dom/client`)
+  reactRender = (Component, el) =>
+    reactDomClient.createRoot(el).render(Component)
+  reactHydrate = (Component, el) => reactDomClient.hydrateRoot(el, Component)
+} else {
+  const reactDomClient = require(`react-dom`)
+  reactRender = reactDomClient.render
+  reactHydrate = reactDomClient.hydrate
+}
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -255,9 +266,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     // Client only pages have any empty body so we just do a normal
     // render to avoid React complaining about hydration mis-matches.
-    let defaultRenderer = render
+    let defaultRenderer = reactRender
     if (focusEl && focusEl.children.length) {
-      defaultRenderer = hydrate
+      defaultRenderer = reactHydrate
     }
 
     const renderer = apiRunner(

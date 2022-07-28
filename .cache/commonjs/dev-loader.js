@@ -16,6 +16,8 @@ var _normalizePagePath = _interopRequireDefault(require("./normalize-page-path")
 var _isEqual = _interopRequireDefault(require("lodash/isEqual"));
 
 // TODO move away from lodash
+const preferDefault = m => m && m.default || m;
+
 function mergePageEntry(cachedPage, newPageData) {
   return { ...cachedPage,
     payload: { ...cachedPage.payload,
@@ -34,12 +36,12 @@ function mergePageEntry(cachedPage, newPageData) {
 
 class DevLoader extends _loader.BaseLoader {
   constructor(asyncRequires, matchPaths) {
-    const loadComponent = (chunkName, exportType = `components`) => {
-      if (!this.asyncRequires[exportType][chunkName]) {
+    const loadComponent = chunkName => {
+      if (!this.asyncRequires.components[chunkName]) {
         throw new Error(`We couldn't find the correct component chunk with the name "${chunkName}"`);
       }
 
-      return this.asyncRequires[exportType][chunkName]() // loader will handle the case when component is error
+      return this.asyncRequires.components[chunkName]().then(preferDefault) // loader will handle the case when component is error
       .catch(err => err);
     };
 

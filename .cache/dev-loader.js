@@ -7,6 +7,8 @@ import normalizePagePath from "./normalize-page-path"
 // TODO move away from lodash
 import isEqual from "lodash/isEqual"
 
+const preferDefault = m => (m && m.default) || m
+
 function mergePageEntry(cachedPage, newPageData) {
   return {
     ...cachedPage,
@@ -29,15 +31,16 @@ function mergePageEntry(cachedPage, newPageData) {
 
 class DevLoader extends BaseLoader {
   constructor(asyncRequires, matchPaths) {
-    const loadComponent = (chunkName, exportType = `components`) => {
-      if (!this.asyncRequires[exportType][chunkName]) {
+    const loadComponent = chunkName => {
+      if (!this.asyncRequires.components[chunkName]) {
         throw new Error(
           `We couldn't find the correct component chunk with the name "${chunkName}"`
         )
       }
 
       return (
-        this.asyncRequires[exportType][chunkName]()
+        this.asyncRequires.components[chunkName]()
+          .then(preferDefault)
           // loader will handle the case when component is error
           .catch(err => err)
       )
