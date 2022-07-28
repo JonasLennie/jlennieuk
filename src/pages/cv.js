@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Box} from "@mui/material";
 
 import cv from "../images/jonas-lennie-cv.svg";
 import cvDownload from "../downloads/jonas-lennie-cv.pdf"
-import {Link} from "gatsby";
 
 function CV() {
+    useEffect(() => {
+        document.title = 'Jonas Lennie | Developer - CV';
+    });
+
     return (
         <Box sx={{
             width: "100%",

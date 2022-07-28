@@ -1,6 +1,5 @@
 import * as React from "react"
 import {styled} from "@mui/material/styles"
-import {Box, Typography} from "@mui/material";
 import {ExternalLinks, LogoLink, PageLinks} from "./Links";
 import {Horisontal} from "../StyledComponents";
 
