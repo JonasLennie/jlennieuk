@@ -20,7 +20,7 @@ var _get2 = _interopRequireDefault(require("lodash/get"));
 
 var _react = _interopRequireDefault(require("react"));
 
-var _fs = _interopRequireDefault(require("fs"));
+var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
 var _server = require("react-dom/server");
 
@@ -35,6 +35,10 @@ var _ssrSyncRequires = _interopRequireDefault(require("$virtual/ssr-sync-require
 var _routeAnnouncerProps = require("./route-announcer-props");
 
 var _router = require("@reach/router");
+
+var _headExportHandlerForSsr = require("./head/head-export-handler-for-ssr");
+
+var _loader = require("./loader");
 
 /* global BROWSER_ESM_ONLY */
 // prefer default export if available
@@ -56,7 +60,7 @@ const getStats = publicDir => {
   if (cachedStats) {
     return cachedStats;
   } else {
-    cachedStats = JSON.parse(_fs.default.readFileSync(_path.default.join(publicDir, `webpack.stats.json`), `utf-8`));
+    cachedStats = JSON.parse(_fsExtra.default.readFileSync(_path.default.join(publicDir, `webpack.stats.json`), `utf-8`));
     return cachedStats;
   }
 };
@@ -163,7 +167,7 @@ async function staticPage({
 
       const absolutePageDataPath = _path.default.join(publicDir, pageDataPath);
 
-      const pageDataJson = _fs.default.readFileSync(absolutePageDataPath, `utf8`);
+      const pageDataJson = _fsExtra.default.readFileSync(absolutePageDataPath, `utf8`);
 
       try {
         return JSON.parse(pageDataJson);
@@ -176,6 +180,14 @@ async function staticPage({
     const {
       componentChunkName
     } = pageData;
+    const pageComponent = await _ssrSyncRequires.default.ssrComponents[componentChunkName];
+    (0, _headExportHandlerForSsr.headHandlerForSSR)({
+      pageComponent,
+      setHeadComponents,
+      staticQueryContext: (0, _loader.getStaticQueryResults)(),
+      pageData,
+      pagePath
+    });
     let scriptsAndStyles = (0, _flatten2.default)([`commons`].map(chunkKey => {
       const fetchKey = `assetsByChunkName[${chunkKey}]`;
       const stats = getStats(publicDir);

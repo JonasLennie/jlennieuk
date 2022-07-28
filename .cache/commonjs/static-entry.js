@@ -57,7 +57,11 @@ const {
   grabMatchParams
 } = require(`./find-path`);
 
-const chunkMapping = require(`../public/chunk-map.json`); // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
+const chunkMapping = require(`../public/chunk-map.json`);
+
+const {
+  headHandlerForSSR
+} = require(`./head/head-export-handler-for-ssr`); // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 
 
 const {
@@ -91,17 +95,6 @@ const getPageDataPath = path => {
   const fixedPagePath = path === `/` ? `index` : path;
   return join(`page-data`, fixedPagePath, `page-data.json`);
 };
-
-const getPageDataUrl = pagePath => {
-  const pageDataPath = getPageDataPath(pagePath);
-  return `${__PATH_PREFIX__}/${pageDataPath}`;
-};
-
-const getStaticQueryPath = hash => join(`page-data`, `sq`, `d`, `${hash}.json`);
-
-const getStaticQueryUrl = hash => `${__PATH_PREFIX__}/${getStaticQueryPath(hash)}`;
-
-const getAppDataUrl = () => `${__PATH_PREFIX__}/${join(`page-data`, `app-data.json`)}`;
 
 const createElement = React.createElement;
 
@@ -242,13 +235,17 @@ async function staticPage({
       postBodyComponents = sanitizeComponents(components);
     };
 
-    const pageDataUrl = getPageDataUrl(pagePath);
     const {
-      componentChunkName,
-      staticQueryHashes = []
+      componentChunkName
     } = pageData;
     const pageComponent = await asyncRequires.components[componentChunkName]();
-    const staticQueryUrls = staticQueryHashes.map(getStaticQueryUrl);
+    headHandlerForSSR({
+      pageComponent,
+      setHeadComponents,
+      staticQueryContext,
+      pageData,
+      pagePath
+    });
 
     class RouteHandler extends React.Component {
       render() {
@@ -429,7 +426,7 @@ async function staticPage({
     // by being pushed down by large inline styles, etc.
     // https://github.com/gatsbyjs/gatsby/issues/22206
 
-    headComponents.sort((a, b) => {
+    headComponents.sort((a, _) => {
       if (a.type && a.type === `meta`) {
         return -1;
       }

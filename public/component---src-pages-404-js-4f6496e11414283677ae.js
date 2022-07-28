@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkjlennie_uk=self.webpackChunkjlennie_uk||[]).push([[883],{429:function(e,n,t){t.r(n);var l=t(7294),u=t(1597),c=t(2953);n.default=function(){return l.createElement(c.Z,null,l.createElement("title",null,"Not found"),l.createElement(u.Link,{to:"/"},"Go home"))}}}]);
+//# sourceMappingURL=component---src-pages-404-js-4f6496e11414283677ae.js.map

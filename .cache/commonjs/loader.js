@@ -29,8 +29,6 @@ const PageResourceStatus = {
 };
 exports.PageResourceStatus = PageResourceStatus;
 
-const preferDefault = m => m && m.default || m;
-
 const stripSurroundingSlashes = s => {
   s = s[0] === `/` ? s.slice(1) : s;
   s = s.endsWith(`/`) ? s.slice(0, -1) : s;
@@ -75,7 +73,7 @@ const doesConnectionSupportPrefetch = () => {
 
 const BOT_REGEX = /bot|crawler|spider|crawling/i;
 
-const toPageResources = (pageData, component = null) => {
+const toPageResources = (pageData, component = null, head) => {
   const page = {
     componentChunkName: pageData.componentChunkName,
     path: pageData.path,
@@ -86,6 +84,7 @@ const toPageResources = (pageData, component = null) => {
   };
   return {
     component,
+    head,
     json: pageData.result,
     page
   };
@@ -278,8 +277,13 @@ class BaseLoader {
         componentChunkName,
         staticQueryHashes = []
       } = pageData;
-      const finalResult = {};
-      const componentChunkPromise = this.loadComponent(componentChunkName).then(component => {
+      const finalResult = {}; // In develop we have separate chunks for template and Head components
+      // to enable HMR (fast refresh requires single exports).
+      // In production we have shared chunk with both exports. Double loadComponent here
+      // will be deduped by webpack runtime resulting in single request and single module
+      // being loaded for both `component` and `head`.
+
+      const componentChunkPromise = Promise.all([this.loadComponent(componentChunkName), this.loadComponent(componentChunkName, `head`)]).then(([component, head]) => {
         finalResult.createdAt = new Date();
         let pageResources;
 
@@ -296,7 +300,7 @@ class BaseLoader {
           pageData = Object.assign(pageData, {
             webpackCompilationHash: allData[0] ? allData[0].webpackCompilationHash : ``
           });
-          pageResources = toPageResources(pageData, component);
+          pageResources = toPageResources(pageData, component, head);
         } // undefined if final result is an error
 
 
@@ -583,7 +587,7 @@ class ProdLoader extends BaseLoader {
         throw new Error(`We couldn't find the correct component chunk with the name ${chunkName}`);
       }
 
-      return asyncRequires.components[chunkName]().then(preferDefault) // loader will handle the case when component is error
+      return asyncRequires.components[chunkName]() // loader will handle the case when component is error
       .catch(err => err);
     };
 
