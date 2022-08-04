@@ -1,10 +1,18 @@
 import * as React from "react";
-import {BodySection} from "./styledComponents";
+import {BigAndBlue, BodySection} from "./styledComponents";
+import {Text} from "../Template/StyledComponents";
+
+function header() {
+    return <Text sx={{display: "block", margin: "auto"}}>Here are some of my most
+        recent <BigAndBlue>Projects</BigAndBlue></Text>;
+}
+
 
 function Projects() {
     return (
-        <BodySection id={"projects"}>
-            <h1>The Projects Section</h1>
+        <BodySection id={"projects"} sx={{flexDirection: "column"}}>
+            {header()}
+
         </BodySection>
     )
 }

@@ -6,7 +6,7 @@ import cvDownload from "../downloads/jonas-lennie-cv.pdf"
 
 function CV() {
     useEffect(() => {
-        document.title = 'Jonas Lennie | Developer - CV';
+        document.title = 'CV - Jonas Lennie | Developer';
     });
 
     return (

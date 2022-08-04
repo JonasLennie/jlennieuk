@@ -1,5 +1,5 @@
 import {Link} from "gatsby";
-import logo from "../../../images/LogoTransparent.png";
+import logo from "../../../images/Alt-Logo.png";
 import github from "../../../images/GitHub-Mark.png";
 import linkedIn from "../../../images/LI-In-Bug.png";
 import * as React from "react";
@@ -30,7 +30,7 @@ export function ExternalLinks() {
     return (
         <Horisontal>
             <Link to={"https://github.com/JonasLennie"} sx={{maxHeight: "1vh"}} ><Image src={github} alt={"Github Logo"}/></Link>
-            <Link to={"https://www.linkedin.com/in/jonas-lennie-258327220/"}><Image src={linkedIn} alt={"Linked In Logo"} /></Link>
+            <Link to={"https://www.linkedin.com/in/jlennie/"}><Image src={linkedIn} alt={"Linked In Logo"} /></Link>
             <Link to={"cv"}><Text>CV</Text></Link>
         </Horisontal>
     )
