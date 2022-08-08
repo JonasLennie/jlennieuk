@@ -1,0 +1,19 @@
+{
+  "jobs": [
+    {
+      "role": "UCL - MEng Computer Science",
+      "time": "August 2021 - June 2025",
+      "description": "Grade: Current Average - 81%Grade: Current Average - 81%\nDeveloped programming skills and worked on a wide array of projects, both individual and group based. Achievements and projects outlined below.\n\nLearned about software engineering, including ideas around object-oriented programming, test-driven development and writing clean code.\nEmployed these skills to develop an automatic Tetris player. Able to achieve average scores of 25,000.\n\nLead a group project to develop a tool to visualise operation and performance of arbitrary code.\nI coordinated the team, and split work between the front-end and back-end sub-teams. We encountered disagreement about how to have these components interface, and what dependencies to use, but I was able to mediate discussions, and we were able to reach compromises which were mutually satisfactory.\nThe final tool was used in a later project to analyse some data structures and informed a choice which led to a 12 times performance improvement in the final solution."
+    },
+    {
+      "role": "London Strategic Consulting - Digital Consultant",
+      "time": "January 2022 - March 2022",
+      "description": "Our team was with a Singapore-based client to review strategy in preparation to expansion into new regions.\nI was responsible for reviewing technical infrastructure and their web presence.\n\nCommunication was vital. The needs of the client had to be evaluated; I discussed with them what their objectives were for this project and developed an actionable list of pain points. \nCommunicating also very important so my non-technical colleagues could follow what I was doing (and vice versa).\n\nOne primary pain point was website performance. As such I developed a set of recommendations, such as employing caching, lazy loading and CDNs, which would cut latency by an estimated 50% in the short term, and 90% in the long term.\nIn addition to this, I worked with my team to develop a long-term maintenance strategy for our client, which aligned with components of the primary strategy. The strategy contained a plan for how to avoid future degradation of site performance."
+    },
+    {
+      "role": "T-Systems MMS - Software & Security Intern",
+      "time": "July 2019",
+      "description": "Our team was developing a custom forum component for a website for students.\nI was responsible for the security and user authentication on this website.\n\nThe project was split up into several smaller teams, and co-ordination between teams was vital. Communication, and reaching compromises was one of my primary responsibilities. I had some influence over database layout but had to conform to the database team’s API. Similarly, I had to take the data that the front-end team gave me and provide the back-end team with a new user session, or an error.\nThe project was only successful due to clear and effective communication and compromise.\n\nThe final project was completed on time, and delivered to the satisfaction of shareholders. I ensured passwords were stored securely, by using hashing and salting, and successfully pushed for the use of HTTPS."
+    }
+  ]
+}

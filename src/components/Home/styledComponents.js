@@ -44,7 +44,20 @@ export const CardContainer = styled(Box) `
   padding-bottom: 10px;
 `
 
-export const StyledCard = styled(Card)`
+const StyledCard = styled(Card)`
+  width: calc(80vh - 10px * 2);
+  max-width: calc(1000px - 10px * 2)
+  margin: 10px;
+  background-color: #242F40;
+  color: #E5E5E5;
+`
+
+export const StyledWorkCard = styled(StyledCard)`
+
+  
+`
+
+export const StyledProjectCard = styled(Card)`
   min-height: calc(30vh - 10px * 2);
   width: calc(40vw - 10px * 2);
   max-width: calc(500px - 10px * 2);
@@ -53,6 +66,8 @@ export const StyledCard = styled(Card)`
   color: #E5E5E5;
   display:inline-block;
 `
+
+
 
 export const BigAndBlue = styled(Text) `
   padding: 6px 0;
@@ -66,13 +81,17 @@ export const BigAndBlue = styled(Text) `
   display: inline;
 `
 
+export const YellowLink = styled('a')`
+    color: #CCA43B;
+`
+
 export const NewButton = (props) => {
     return (
         <Button sx={{color: "#E5E5E5",
             backgroundColor: "#CCA43B",
             display: "block",
             margin: "auto"}}>
-            <Text>{props.children}</Text>
+            <Text sx={{fontSize: 28}}>{props.children}</Text>
         </Button>
     )
 }

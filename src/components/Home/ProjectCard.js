@@ -1,5 +1,5 @@
 import * as React from "react";
-import {StyledCard} from "./styledComponents";
+import {StyledProjectCard} from "./styledComponents";
 import {Text} from "../Template/StyledComponents";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -21,7 +21,7 @@ const ExpandMore = styled((props) => {
 }));
 
 
-export default class SideNav extends Component {
+export default class ProjectCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -49,7 +49,7 @@ export default class SideNav extends Component {
 
 
     render = () =>
-        <StyledCard sx={{ width: this.state.cardWidth, maxWidth: this.state.cardMaxWidth }}>
+        <StyledProjectCard sx={{ width: this.state.cardWidth, maxWidth: this.state.cardMaxWidth }}>
             <CardContent>
                 <Text sx={{fontSize: 30}}>{this.props.project.title}</Text>
                 <Text>{this.props.project.subheading}</Text>
@@ -71,5 +71,5 @@ export default class SideNav extends Component {
                     <Text>{this.props.project.description}</Text>
                 </CardContent>
             </Collapse>
-        </StyledCard>
+        </StyledProjectCard>
 }
