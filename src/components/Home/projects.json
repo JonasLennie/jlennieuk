@@ -1,0 +1,24 @@
+{
+  "projects": [
+    {
+      "title": "Distributed Systems",
+      "subheading": "A fascination with networks and distributed systems led to me researching these topics and working on basic models of some of these systems.",
+      "description": "I have made use of concepts such as TCP/IP and routing & switching many times over the years. I’ve done a significant amount of network traffic security analysis, with tools like Wireshark and Snort. This led me to want to learn more about networking. \n\nI’ve looked at papers covering everything from basic networking principles to complex traffic engineering strategies. These include things like fibbing, a distributed approach to augmenting traffic flow in a network, with similar expressivity to software defined networking, but without the centralised overhead. Another example is NDP, a novel transport protocol and datacentre architecture designed to be much more able to deal with bursts of activity, or DTA, an RDMA-based, zero-CPU-cycle telemetry collection solution.\n\nLeading on from my research in networking, I’ve looked at distributed systems. Covering ideas such as the CAP principle and CRDTs, which are used to think about data consistency under failures of nodes or network links in a generic way in a network. I then went on to implement a model for such systems, and some basic algorithms, such as leader election, available on my GitHub. Broadly based on the book Distributed Systems by Nancy A. Lynch."
+    },
+    {
+      "title": "Personal Website",
+      "subheading": "Building of a wide set of skills, in networking, cloud technology and web development, I have built and deployed a personal website.",
+      "description": "Knowledge of technologies such as DNS, and originally a Linux server (but eventually just Firebase), I was confidently able to deploy the site I had built to the world.\nThe site was built using Gatsby, on top of react, and posed challenges, such as ensuring the site is responsive on mobile devices and unusual screen formats.\nI also learned a valuable lesson, similar to what Facebook went through; React is significantly more enjoyable than the traditional LAMP stack."
+    },
+    {
+      "title": "Entrepreneurial Work",
+      "subheading": "Working on a project to build out a bed management system for hospitals to replace old and inefficient phone systems.",
+      "description": "Worked with other technical specialists as well as medics to understand their need in the hospital and how we can improve the medic’s user experience. Informative experience, working with non-technical people, and looking to deploy a project in the wild. Faced novel challenges, such as how to handle patient data sufficiently securely to satisfy the medical data security concerns.\nProduced prototypes and got feedback on them in the field, learned react while working on this project.\n\nUnfortunately, the project was ultimately unsuccessful, but, as a result, the prototype has been published on my GitHub."
+    },
+    {
+      "title": "Information Security",
+      "subheading": "Spent a number of years developing skills in information security, particularly in network security and incident response",
+      "description": "I participated in the Cyber Discovery programme, a national cyber security competition, run by the UK’s NCSC. I reached the penultimate stage of the competition two years in a row and completed a respectable portion of their labs.\nIn addition to this, I took part in the Cyber First summer courses, also form the NSCS, for three years, completing their most advanced course, Cyber First Advanced, with ease.\nI also hold an NPA (somewhat similar to an EPQ) in Cyber Security.\n\nI particularly enjoyed network security and policy work, such as working with Wireshark and Snort, or developing incident response plans. This led on to an interest in networks and DevOps.\nThe most technically interesting problem for me was reverse engineering; picking apart assembly line-by-line to determine the purpose of arbitrary code, while overcoming obfuscation and misleading measures put into place by an adversary."
+    }
+  ]
+}

@@ -1,18 +1,42 @@
 import * as React from "react";
-import {BigAndBlue, BodySection} from "./styledComponents";
+import {BigAndBlue, BodySection, CardContainer} from "./styledComponents";
+import ExpandableCard from "./ProjectCard";
+import data from "./projects.json"
+
 import {Text} from "../Template/StyledComponents";
 
-function header() {
-    return <Text sx={{display: "block", margin: "auto"}}>Here are some of my most
+
+function Header() {
+    return <Text sx={{display: "block"}}>Here are some of my most
         recent <BigAndBlue>Projects</BigAndBlue></Text>;
 }
 
 
+function Cards() {
+    return (
+        <CardContainer>
+            {generateCards()}
+        </CardContainer>
+    );
+}
+
+function generateCards() {
+    return <>
+        {data.projects.map((p) =>
+            <ExpandableCard project={p} />
+        )}
+    </>
+}
+
+
+
 function Projects() {
     return (
-        <BodySection id={"projects"} sx={{flexDirection: "column"}}>
-            {header()}
-
+        <BodySection id={"projects"} direction={"column"}>
+            <>
+                <Header />
+                <Cards />
+            </>
         </BodySection>
     )
 }

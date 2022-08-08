@@ -2,15 +2,14 @@ import * as React from "react";
 import {BodySection, BigAndBlue, NewButton} from "./styledComponents";
 import {Box} from "@mui/material";
 import {Text} from "../Template/StyledComponents";
-import Placeholder from "../../images/web-development.png"
 
 
 function About() {
     return (
-        <BodySection id={"about"}>
-            <Box sx={{flex: 3}}>
-                <img src={Placeholder} alt={"Generic developer Image"} width={"100%"} height={"auto"} sx={{margin: "auto"}}/>
-            </Box>
+        <BodySection id={"about"} direction={"row"}>
+            {/*<Box sx={{flex: 3}}>*/}
+            {/*    <img src={Placeholder} alt={"Generic developer Image"} width={"100%"} height={"auto"} sx={{margin: "auto"}}/>*/}
+            {/*</Box>*/}
 
             <Waffle sx={{maxWidth: "60%"}}/>
         </BodySection>
@@ -21,12 +20,16 @@ function About() {
 
 const Waffle = () => {
     return (
-        <Box sx={{flex: 4}}>
+        <Box sx={{margin: "auto"}}>
         <Text>Hi, I'm </Text>
 
             <BigAndBlue sx={{marginLeft: 5}}> Jonas Lennie</BigAndBlue>
 
-            <Text sx={{marginLeft: 10}}>I'm a Second-year Computer Scientist at <BigAndBlue>UCL</BigAndBlue>
+            <br />
+            <br />
+
+            <Text sx={{marginLeft: 10, fontSize: "20pt"}}>I'm a Second-year Computer Scientist at <BigAndBlue>UCL</BigAndBlue>
+                <br />
                 <br />
 
                 I'm passionate about anything Technology.
@@ -34,7 +37,10 @@ const Waffle = () => {
                 I love any challenging technical problem, and If you're looking for someone like me, then,
             </Text>
 
-            <NewButton>Get In Touch</NewButton>
+            <br />
+            <br />
+
+            <a href={"#contact"}><NewButton>Get In Touch</NewButton></a>
 
         </Box>
     )

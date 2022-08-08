@@ -46,7 +46,7 @@ const StyledTemplate = styled(Box) ({
 })
 
 const BodyWrapper = styled(Box) ({
-    width: "80%",
+    width: "80vw",
     maxWidth: "1000px",
     textAlign: "left",
     margin: "auto"
