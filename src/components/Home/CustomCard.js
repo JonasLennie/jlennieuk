@@ -1,14 +1,9 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {StyledWorkCard} from "./styledComponents";
+import {StyledCard} from "./styledComponents";
 import {Text} from "../Template/StyledComponents";
 
 const ExpandMore = styled((props) => {
@@ -22,7 +17,7 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-export default function WorkCard( { work } ) {
+export default function CustomCard( { title, subheading, body } ) {
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -30,18 +25,18 @@ export default function WorkCard( { work } ) {
     };
 
     return (
-        <StyledWorkCard
+        <StyledCard
             expand={expanded}
             onClick={handleExpandClick}>
             <CardContent>
-                <Text sx={{fontSize: 30}}>{work.role}</Text>
-                <Text sx={{fontSize: 20}}>{work.time}</Text>
+                <Text sx={{fontSize: 30}}>{title}</Text>
+                <Text sx={{fontSize: 20}}>{subheading}</Text>
             </CardContent>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Text>{work.description}</Text>
+                    <Text>{body}</Text>
                 </CardContent>
             </Collapse>
-        </StyledWorkCard>
+        </StyledCard>
     );
 }

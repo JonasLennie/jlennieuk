@@ -40,7 +40,7 @@ const Waffle = () => {
             <br />
             <br />
 
-            <a href={"#contact"}><NewButton>Get In Touch</NewButton></a>
+            <a href={"#contact"}><NewButton sx={{zIndex:-1}}>Get In Touch</NewButton></a>
 
         </Box>
     )

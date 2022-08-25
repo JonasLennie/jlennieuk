@@ -12,12 +12,12 @@ export const BodySection = (props) => {
                 minHeight: "calc(100vh - 75px)",
                 display: "flex",
                 gap: 2,
-                marginTop: 3,
-                marginBottom: 3,
+                marginTop: 15,
+                marginBottom: 15,
                 justifyContent: "center",
                 alignItems: "center",
                 flexDirection: props.direction,
-                margin: "auto"
+                margin: "auto",
             }}
             >
                 {props.children}
@@ -44,17 +44,12 @@ export const CardContainer = styled(Box) `
   padding-bottom: 10px;
 `
 
-const StyledCard = styled(Card)`
-  width: calc(80vh - 10px * 2);
-  max-width: calc(1000px - 10px * 2)
+export const StyledCard = styled(Card)`
+  width: calc(80vw - (10px * 2));
+  max-width: calc(1000px - 10px * 2);
   margin: 10px;
   background-color: #242F40;
   color: #E5E5E5;
-`
-
-export const StyledWorkCard = styled(StyledCard)`
-
-  
 `
 
 export const StyledProjectCard = styled(Card)`

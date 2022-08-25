@@ -1,9 +1,10 @@
 import * as React from "react";
 import {BigAndBlue, BodySection, CardContainer} from "./styledComponents";
-import ExpandableCard from "./ProjectCard";
 import data from "./projects.json"
 
 import {Text} from "../Template/StyledComponents";
+import SimpleProjectCard from "./CustomCard";
+import CustomCard from "./CustomCard";
 
 
 function Header() {
@@ -14,16 +15,16 @@ function Header() {
 
 function Cards() {
     return (
-        <CardContainer>
+        <>
             {generateCards()}
-        </CardContainer>
+        </>
     );
 }
 
 function generateCards() {
     return <>
         {data.projects.map((p) =>
-            <ExpandableCard project={p} />
+            <CustomCard title={p.title} subheading={p.subheading} body={p.description} />
         )}
     </>
 }
